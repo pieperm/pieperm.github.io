@@ -1,0 +1,39 @@
+@import "../../index";
+
+.navbar {
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #343941;
+
+  .nav-link {
+    color: $link-primary;
+    font-family: $code-font;
+    text-decoration: none;
+    transition-duration: 0.1s;
+
+    &:hover {
+      color: $link-hover;
+      text-shadow: 0 0 5px $link-hover
+    }
+  }
+
+  .nav-left {
+    justify-content: flex-start;
+
+    .nav-link {
+      margin-left: 40px;
+    }
+  }
+
+  .nav-right {
+    justify-content: flex-end;
+
+    .nav-link {
+      margin-right: 40px;
+    }
+  }
+
+}
