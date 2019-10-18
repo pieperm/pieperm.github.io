@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { Link } from "react-router-dom";
-import './Navbar.scss'
+import './Navbar.scss';
 
 function Navbar() {
     return (
@@ -15,7 +15,7 @@ function Navbar() {
                 <a target="_blank" rel="noopener noreferrer" className="nav-link" href="https://github.com/pieperm">GitHub</a>
             </div>
         </nav>
-    )
+    );
 }
 
 export default Navbar
