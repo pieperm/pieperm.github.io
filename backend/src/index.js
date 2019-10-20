@@ -1,12 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const helmet = require('helmet');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
+app.use(helmet());
 
-const projects = [];
+let projects = [];
+let posts = [];
 
-app.get('/', (req, res) => {
+app.get('/projects', (req, res) => {
     const projs = projects.map(proj => ({
         id: proj.id,
         title: proj.title,
@@ -16,7 +21,7 @@ app.get('/', (req, res) => {
     res.send(projs);
 });
 
-app.post('/', (req, res) => {
+app.post('/projects', (req, res) => {
     const { title, description, time } = req.body;
     const newProject = {
         id: projects.length + 1,
@@ -28,13 +33,32 @@ app.post('/', (req, res) => {
     res.status(200).send();
 });
 
-app.get('/:id', (req, res) => {
+app.post('/projects/:id', (req, res) => {
     const project = projects.filter(proj => (proj.id === parseInt(req.params.id)));
     if (project.length > 1) return res.status(500).send();
     if (project.length === 0) return res.status(404).send();
-    res.send(project[0])
+    res.send(project[0]);
 });
 
-app.listen(3000, () => {
-    console.log('Listening on port 3000')
+app.post('/projects/:id/delete', (req, res) => {
+    const project = projects.filter(proj => (proj.id === parseInt(req.params.id)));
+    if (project.length > 1) return res.status(500).send();
+    if (project.length === 0) return res.status(404).send();
+    projects = projects.filter(proj => (proj.id !== parseInt(req.params.id)));
+    res.status(200).send();
+
+});
+
+app.get('/posts', (req, res) => {
+    const psts = posts.map(post => ({
+        id: post.id,
+        title: post.title,
+        excerpt: post.excerpt,
+        date: post.date,
+    }));
+    res.send(psts);
+});
+
+app.listen(8081, () => {
+    console.log('Listening on port 8081');
 });
