@@ -33,7 +33,7 @@ app.post('/projects', (req, res) => {
     res.status(200).send();
 });
 
-app.post('/projects/:id', (req, res) => {
+app.get('/project/:id', (req, res) => {
     const project = projects.filter(proj => (proj.id === parseInt(req.params.id)));
     if (project.length > 1) return res.status(500).send();
     if (project.length === 0) return res.status(404).send();
