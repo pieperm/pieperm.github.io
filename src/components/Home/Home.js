@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import Project from "../Project/Project";
 import './Home.scss';
+import Card from '../Card/Card';
 
 class Home extends React.Component {
     constructor(props) {
@@ -9,6 +9,7 @@ class Home extends React.Component {
 
         this.state = {
             projects: null,
+            posts: null,
         }
     }
 
@@ -31,11 +32,12 @@ class Home extends React.Component {
                         {this.state.projects === null ?
                             <p>Loading projects...</p> :
                             this.state.projects.map(proj => (
-                                <Project key={proj.id}
-                                         id={proj.id}
-                                         title={proj.title}
-                                         time={proj.time}
-                                         description={proj.description}
+                                <Card key={proj.id}
+                                      id={proj.id}
+                                      link={`/projects/${proj.id}`}
+                                      title={proj.title}
+                                      time={proj.time}
+                                      description={proj.description}
                                 />
                             ))
                         }
@@ -45,14 +47,15 @@ class Home extends React.Component {
                 <div className="preview-section">
                     <h2>Posts</h2>
                     <div className="posts-container">
-                        {this.state.projects === null ?
+                        {this.state.posts === null ?
                             <p>Loading projects...</p> :
-                            this.state.projects.map(proj => (
-                                <Project key={proj.id}
-                                         id={proj.id}
-                                         title={proj.title}
-                                         time={proj.time}
-                                         description={proj.description}
+                            this.state.posts.map(post => (
+                                <Card key={post.id}
+                                      id={post.id}
+                                      link={`/posts/${post.id}`}
+                                      title={post.title}
+                                      time={post.time}
+                                      description={post.description}
                                 />
                             ))
                         }

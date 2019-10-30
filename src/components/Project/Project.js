@@ -1,27 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom';
+import axios from 'axios';
 import './Project.scss';
 
 class Project extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            project: null,
+        }
+    }
+
+    async componentDidMount() {
+        const {match: { params }} = this.props;
+        const project = (await axios.get(`http://localhost:8081/project/${params.id}`)).data;
+        this.setState({
+            project,
+        })
+    }
+
     render() {
         return (
-            <Link to={`/project/${this.props.id}`} className="link-wrapper">
-                <div className="project-frame">
-                    <h3>{this.props.title}</h3>
-                    <h5>{this.props.time}</h5>
-                    <p>{this.props.description}</p>
-                </div>
-            </Link>
+            this.state.project === null ?
+                <p>Loading...</p> :
+                <React.Fragment>
+                    <h1>{this.state.project.title}</h1>
+                    <h3>{this.state.project.time}</h3>
+                </React.Fragment>
         );
     }
 }
-
-Project.propTypes = {
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    time: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-};
 
 export default Project;
